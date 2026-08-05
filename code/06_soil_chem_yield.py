@@ -17,6 +17,7 @@ being a trend/kriged estimate of the coarse soil-test class. We use only the RAW
 (coarse) soil-test covariates as predictors below, to avoid the same target-leakage
 risk documented for the main spatial dataset.
 """
+import os
 import numpy as np
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
@@ -25,7 +26,7 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error
 import warnings
 warnings.filterwarnings('ignore')
 
-soil = pd.read_excel('/mnt/user-data/uploads/CORN_SOIL_WATER_pH_OM_PO_KO_CA_Mg_WT_WD.xlsx', sheet_name=0)
+soil = pd.read_excel('../raw_data/CORN_SOIL_WATER_pH_OM_PO_KO_CA_Mg_WT_WD.xlsx', sheet_name=0)
 
 RAW_COVARIATES = ['PH_H2O', 'MO_PERC', 'P2O5', 'K2O', 'CaO', 'MgO', 'Top_Soil_E', 'Deep_Soil_']
 TARGET = 'CORN_KG_M2'
@@ -53,14 +54,14 @@ for name, p in [('LM', pred_lm), ('RF', pred_rf)]:
     rows.append({'model': name, 'R2': r2_score(y, p), 'RMSE': np.sqrt(mean_squared_error(y, p)),
                  'MAE': mean_absolute_error(y, p)})
 cv_soilchem = pd.DataFrame(rows)
-cv_soilchem.to_csv('/home/claude/msrk/out/cv_results_soilchem_yield.csv', index=False)
+cv_soilchem.to_csv(os.path.join(THIS_DIR, '..', 'outputs_data', 'cv_results_soilchem_yield.csv'), index=False)
 print(cv_soilchem.round(4))
 
 # full-data RF fit for feature importance + partial-dependence-style binned means
 rf_full = RandomForestRegressor(n_estimators=600, max_depth=10, min_samples_leaf=5,
                                  random_state=5, n_jobs=-1).fit(X, y)
 imp = pd.Series(rf_full.feature_importances_, index=RAW_COVARIATES).sort_values(ascending=False)
-imp.to_csv('/home/claude/msrk/out/feature_importance_soilchem.csv')
+imp.to_csv(os.path.join(THIS_DIR, '..', 'outputs_data', 'feature_importance_soilchem.csv'))
 print('\nFeature importances (soil chemistry -> yield):')
 print(imp)
 
@@ -71,6 +72,6 @@ for c in RAW_COVARIATES:
     grp = soil.groupby(bins, observed=True)[TARGET].agg(['mean', 'std', 'count'])
     grp.index = [f'{iv.left:.2f}-{iv.right:.2f}' for iv in grp.index]
     pd_curves[c] = grp
-    grp.to_csv(f'/home/claude/msrk/out/pdcurve_{c}.csv')
+    grp.to_csv(fos.path.join(THIS_DIR, '..', 'outputs_data', 'pdcurve_{c}.csv'))
 
 print('\nSaved binned response curves for:', list(pd_curves.keys()))

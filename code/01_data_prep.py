@@ -8,14 +8,16 @@ Builds:
       measured on 5 dates (Jul_15 -> Aug_30) at 68 fixed georeferenced stations, with
       companion NDVI (crop-stress proxy).
 """
+import os
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 import numpy as np
 import pandas as pd
 
 RNG = np.random.default_rng(42)
 
 # ---------- (A) Spatial multitask corn dataset ----------
-npk = pd.read_csv('/mnt/user-data/uploads/Corn_NPK.csv')
-ph  = pd.read_csv('/mnt/user-data/uploads/Corn_rise_pH.csv')
+npk = pd.read_csv('../raw_data/Corn_NPK.csv')
+ph  = pd.read_csv('../raw_data/Corn_rise_pH.csv')
 
 npk.columns = [c.strip() for c in npk.columns]
 ph.columns  = [c.strip() for c in ph.columns]
@@ -34,7 +36,7 @@ df = df.drop_duplicates(subset=['x', 'y']).reset_index(drop=True)
 
 TASKS = ['yield_kgm2', 'npk_ppm', 'soil_ph', 'caco3_ppm']
 
-df.to_csv('/home/claude/msrk/data/corn_multitask_full.csv', index=False)
+df.to_csv(os.path.join(THIS_DIR, '..', 'data', 'corn_multitask_full.csv'), index=False)
 
 # Kriging-tractable subsample (spatially thinned via random subsample of a fine grid)
 N_SUB = 1400
@@ -43,16 +45,16 @@ if len(df) > N_SUB:
     df_sub = df.iloc[idx].reset_index(drop=True)
 else:
     df_sub = df.copy()
-df_sub.to_csv('/home/claude/msrk/data/corn_multitask_sub.csv', index=False)
+df_sub.to_csv(os.path.join(THIS_DIR, '..', 'data', 'corn_multitask_sub.csv'), index=False)
 
 print('Full corn multitask dataset:', df.shape)
 print('Subsampled (kriging-tractable):', df_sub.shape)
 print(df[TASKS].describe().T[['mean', 'std', 'min', 'max']])
 
 # ---------- (B) Spatio-temporal Brix / NDVI dataset ----------
-brix = pd.read_excel('/mnt/user-data/uploads/Sample_brix_ndvi.xlsx', sheet_name=0)
+brix = pd.read_excel('../raw_data/Sample_brix_ndvi.xlsx', sheet_name=0)
 brix.columns = [c.strip() for c in brix.columns]
-coords = pd.read_csv('/mnt/user-data/uploads/BRIX_AMT.csv')
+coords = pd.read_csv('../raw_data/BRIX_AMT.csv')
 coords.columns = [c.strip() for c in coords.columns]
 coords = coords.rename(columns={'Sample': 'Id'})[['Id', 'XX_UTM', 'YY_UTM']]
 
@@ -76,8 +78,8 @@ brix_st['brix_rate'] = slopes
 brix_st['stress_index'] = (brix_st['brix_rate'].max() - brix_st['brix_rate']) / \
                            (brix_st['brix_rate'].max() - brix_st['brix_rate'].min())
 
-brix_st.to_csv('/home/claude/msrk/data/brix_st_wide.csv', index=False)
-brix_long.to_csv('/home/claude/msrk/data/brix_st_long.csv', index=False)
+brix_st.to_csv(os.path.join(THIS_DIR, '..', 'data', 'brix_st_wide.csv'), index=False)
+brix_long.to_csv(os.path.join(THIS_DIR, '..', 'data', 'brix_st_long.csv'), index=False)
 
 print('\nSpatio-temporal Brix/NDVI dataset:', brix_st.shape, '(', len(brix_long), 'space-time observations)')
 print(brix_st[['NDVI1', 'brix_rate', 'stress_index']].describe().T[['mean', 'std', 'min', 'max']])

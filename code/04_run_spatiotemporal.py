@@ -1,5 +1,7 @@
+import os
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 import sys
-sys.path.insert(0, '/home/claude/msrk/code')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import pandas as pd
 from scipy.spatial import cKDTree
@@ -10,7 +12,7 @@ from pykrige.ok import OrdinaryKriging
 import warnings
 warnings.filterwarnings('ignore')
 
-st = pd.read_csv('/home/claude/msrk/data/brix_st_wide.csv')
+st = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'brix_st_wide.csv'))
 date_cols = ['Jul_15', 'Jul_30', 'Aug_06', 'Aug_15', 'Aug_30']
 doy_map = {'Jul_15': 196, 'Jul_30': 211, 'Aug_06': 218, 'Aug_15': 227, 'Aug_30': 242}
 
@@ -43,7 +45,7 @@ def st_singularity_index(xy, t, v, radii, taus):
     return alpha
 
 
-long = pd.read_csv('/home/claude/msrk/data/brix_st_long.csv')
+long = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'brix_st_long.csv'))
 xyt = long[['x', 'y']].to_numpy()
 t = long['t'].to_numpy()
 v = long['brix'].to_numpy()
@@ -51,7 +53,7 @@ v = long['brix'].to_numpy()
 print('Computing space-time singularity index for Brix maturation field...')
 alpha_st = st_singularity_index(xyt, t, v, radii=(150, 300), taus=(7, 15))
 long['alpha_brix_st'] = alpha_st
-long.to_csv('/home/claude/msrk/data/brix_st_long_with_singularity.csv', index=False)
+long.to_csv(os.path.join(THIS_DIR, '..', 'data', 'brix_st_long_with_singularity.csv'), index=False)
 print(pd.Series(alpha_st).describe())
 
 # ---- multitask spatio-temporal trend + residual kriging (per-date OK on residuals) ----
@@ -101,7 +103,7 @@ for m, p in preds.items():
     rows.append({'model': m, 'R2': r2_score(y, p), 'RMSE': np.sqrt(mean_squared_error(y, p)),
                  'MAE': mean_absolute_error(y, p)})
 cv_st = pd.DataFrame(rows)
-cv_st.to_csv('/home/claude/msrk/out/cv_results_spatiotemporal.csv', index=False)
+cv_st.to_csv(os.path.join(THIS_DIR, '..', 'outputs_data', 'cv_results_spatiotemporal.csv'), index=False)
 print('\n=== Spatio-temporal Brix CV (5-fold) ===')
 print(cv_st.round(3))
 
@@ -109,6 +111,6 @@ print(cv_st.round(3))
 rf_full = RandomForestRegressor(n_estimators=500, max_depth=8, min_samples_leaf=3,
                                  random_state=3, n_jobs=-1).fit(X, y)
 imp = pd.Series(rf_full.feature_importances_, index=['x', 'y', 't', 'alpha_brix_st', 'ndvi'])
-imp.to_csv('/home/claude/msrk/out/feature_importance_st.csv')
+imp.to_csv(os.path.join(THIS_DIR, '..', 'outputs_data', 'feature_importance_st.csv'))
 print('\nFeature importances (space-time RF trend):')
 print(imp.sort_values(ascending=False))
