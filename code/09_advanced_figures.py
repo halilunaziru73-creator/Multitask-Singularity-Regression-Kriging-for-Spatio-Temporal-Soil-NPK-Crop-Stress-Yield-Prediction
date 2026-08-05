@@ -1,3 +1,5 @@
+import os
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -8,12 +10,12 @@ import warnings
 warnings.filterwarnings('ignore')
 
 plt.rcParams.update({'font.size': 10, 'figure.dpi': 150})
-FIG = '/home/claude/msrk/figs'
-OUT = '/home/claude/msrk/out'
+FIG = os.path.join(THIS_DIR, '..', 'figures')
+OUT = os.path.join(THIS_DIR, '..', 'outputs_data')
 TASKS = ['yield_kgm2', 'npk_ppm', 'soil_ph', 'caco3_ppm']
 TASK_LABELS = {'yield_kgm2': 'Corn yield', 'npk_ppm': 'NPK (est.)',
                'soil_ph': 'Soil pH', 'caco3_ppm': 'CaCO$_3$ (est.)'}
-df = pd.read_csv('/home/claude/msrk/data/corn_multitask_with_singularity.csv')
+df = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'corn_multitask_with_singularity.csv'))
 
 # ---------------- Fig 11: Moran's I bar + Moran scatterplot for yield ----------------
 moran = pd.read_csv(f'{OUT}/morans_i.csv')

@@ -1,5 +1,7 @@
+import os
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 import sys
-sys.path.insert(0, '/home/claude/msrk/code')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import pandas as pd
 import matplotlib
@@ -10,12 +12,12 @@ import warnings
 warnings.filterwarnings('ignore')
 
 plt.rcParams.update({'font.size': 10, 'figure.dpi': 150})
-FIGDIR = '/home/claude/msrk/figs'
+FIGDIR = os.path.join(THIS_DIR, '..', 'figures')
 TASKS = ['yield_kgm2', 'npk_ppm', 'soil_ph', 'caco3_ppm']
 TASK_LABELS = {'yield_kgm2': 'Corn yield (kg m$^{-2}$)', 'npk_ppm': 'NPK (est., ppm)',
                'soil_ph': 'Soil pH', 'caco3_ppm': 'CaCO$_3$ (est., ppm)'}
 
-df = pd.read_csv('/home/claude/msrk/data/corn_multitask_with_singularity.csv')
+df = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'corn_multitask_with_singularity.csv'))
 
 # ---------------- Fig 1: correlation heatmap ----------------
 cols = TASKS + [f'alpha_{t}' for t in TASKS]
@@ -46,7 +48,7 @@ plt.tight_layout()
 plt.savefig(f'{FIGDIR}/fig2_singularity_maps.png'); plt.close()
 
 # ---------------- Fig 3: CV comparison (R2 heatmap like screenshot) ----------------
-cv = pd.read_csv('/home/claude/msrk/out/cv_results_spatial.csv')
+cv = pd.read_csv(os.path.join(THIS_DIR, '..', 'outputs_data', 'cv_results_spatial.csv'))
 piv = cv.pivot(index='model', columns='task', values='R2')[TASKS].loc[['LM', 'IDW', 'OK', 'RF', 'RFK', 'SRK']]
 fig, ax = plt.subplots(figsize=(6.5, 4.2))
 im = ax.imshow(piv.values, cmap='RdYlGn', vmin=0, vmax=1, aspect='auto')
@@ -98,8 +100,8 @@ plt.savefig(f'{FIGDIR}/fig5_obs_vs_pred.png'); plt.close()
 print('Spatial figures done.')
 
 # ---------------- Spatio-temporal figures ----------------
-st = pd.read_csv('/home/claude/msrk/data/brix_st_wide.csv')
-long = pd.read_csv('/home/claude/msrk/data/brix_st_long_with_singularity.csv')
+st = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'brix_st_wide.csv'))
+long = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'brix_st_long_with_singularity.csv'))
 date_cols = ['Jul_15', 'Jul_30', 'Aug_06', 'Aug_15', 'Aug_30']
 
 # Fig 6: Brix trajectories coloured by stress index
@@ -131,8 +133,8 @@ plt.tight_layout()
 plt.savefig(f'{FIGDIR}/fig7_st_maps.png'); plt.close()
 
 # Fig 8: feature importance + CV bar for spatio-temporal model
-imp = pd.read_csv('/home/claude/msrk/out/feature_importance_st.csv', index_col=0).iloc[:, 0]
-cv_st = pd.read_csv('/home/claude/msrk/out/cv_results_spatiotemporal.csv')
+imp = pd.read_csv(os.path.join(THIS_DIR, '..', 'outputs_data', 'feature_importance_st.csv'), index_col=0).iloc[:, 0]
+cv_st = pd.read_csv(os.path.join(THIS_DIR, '..', 'outputs_data', 'cv_results_spatiotemporal.csv'))
 fig, axes = plt.subplots(1, 2, figsize=(10, 4))
 imp.sort_values().plot.barh(ax=axes[0], color='#2b6cb0')
 axes[0].set_title('Space-time RF trend: feature importance')

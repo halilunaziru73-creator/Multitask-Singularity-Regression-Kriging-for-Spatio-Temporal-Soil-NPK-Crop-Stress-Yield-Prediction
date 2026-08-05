@@ -1,5 +1,7 @@
+import os
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 import sys
-sys.path.insert(0, '/home/claude/msrk/code')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -13,8 +15,8 @@ from msrk_engine import singularity_index_from_train, ordinary_kriging_predict, 
 import warnings
 warnings.filterwarnings('ignore')
 
-OUT = '/home/claude/msrk/out'
-df = pd.read_csv('/home/claude/msrk/data/corn_multitask_with_singularity.csv')
+OUT = os.path.join(THIS_DIR, '..', 'outputs_data')
+df = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'corn_multitask_with_singularity.csv'))
 TASKS = ['yield_kgm2', 'npk_ppm', 'soil_ph', 'caco3_ppm']
 coords = df[['x', 'y']].to_numpy()
 x_n = (df['x'] - df['x'].mean()) / df['x'].std()
@@ -53,7 +55,7 @@ print(perm_df.groupby(['task', 'feature'])['importance_mean'].mean().round(4))
 # =====================================================================
 # 5. PCA biplot on auxiliary soil-chemistry covariates
 # =====================================================================
-soil = pd.read_excel('/mnt/user-data/uploads/CORN_SOIL_WATER_pH_OM_PO_KO_CA_Mg_WT_WD.xlsx', sheet_name=0)
+soil = pd.read_excel('../raw_data/CORN_SOIL_WATER_pH_OM_PO_KO_CA_Mg_WT_WD.xlsx', sheet_name=0)
 RAW_COVARIATES = ['PH_H2O', 'MO_PERC', 'P2O5', 'K2O', 'CaO', 'MgO', 'Top_Soil_E', 'Deep_Soil_']
 soil = soil.dropna(subset=RAW_COVARIATES + ['CORN_KG_M2']).reset_index(drop=True)
 Xs = StandardScaler().fit_transform(soil[RAW_COVARIATES])

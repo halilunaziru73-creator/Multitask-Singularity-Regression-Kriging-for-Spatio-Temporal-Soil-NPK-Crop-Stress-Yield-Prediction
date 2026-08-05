@@ -258,6 +258,18 @@ All 22 data-derived figures, extracted directly from the manuscript:
 
 ## How to Run the Code
 
+> **Note on raw data:** `01_data_prep.py`, `06_soil_chem_yield.py`, and
+> `08_deep_analysis2.py` read from six raw source files (`Corn_NPK.csv`,
+> `Corn_rise_pH.csv`, `Sample_brix_ndvi.xlsx`, `BRIX_AMT.csv`,
+> `CORN_SOIL_WATER_pH_OM_PO_KO_CA_Mg_WT_WD.xlsx`) that are **not included in
+> this repository** — they are the original field-practical data files and
+> are expected in a `raw_data/` folder at the repo root (create it and place
+> the files there before running `01_data_prep.py`). The processed outputs
+> derived from them (all 22 figures and 22 result CSVs) **are** included in
+> `figures/` and `outputs_data/`, so the results are fully inspectable even
+> without the raw files; only re-running the pipeline from scratch requires
+> them.
+
 ### 1. Clone the repository
 
 ```bash

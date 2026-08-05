@@ -1,5 +1,7 @@
+import os
+THIS_DIR = os.path.dirname(os.path.abspath(__file__))
 import sys
-sys.path.insert(0, '/home/claude/msrk/code')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 import pandas as pd
 from scipy.spatial import cKDTree
@@ -14,9 +16,9 @@ from pykrige.ok import OrdinaryKriging
 import warnings
 warnings.filterwarnings('ignore')
 
-df = pd.read_csv('/home/claude/msrk/data/corn_multitask_with_singularity.csv')
+df = pd.read_csv(os.path.join(THIS_DIR, '..', 'data', 'corn_multitask_with_singularity.csv'))
 TASKS = ['yield_kgm2', 'npk_ppm', 'soil_ph', 'caco3_ppm']
-OUT = '/home/claude/msrk/out'
+OUT = os.path.join(THIS_DIR, '..', 'outputs_data')
 
 # =====================================================================
 # 1. Global Moran's I (spatial autocorrelation) - k-NN row-standardised W
@@ -121,7 +123,7 @@ print(vgm_df.round(3))
 # =====================================================================
 # 3. Sensitivity analysis: radius bank x number of scales -> mean R2 (SRK, all tasks)
 # =====================================================================
-sys.path.insert(0, '/home/claude/msrk/code')
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 from msrk_engine import singularity_index_from_train, ordinary_kriging_predict
 from sklearn.metrics import r2_score
 
