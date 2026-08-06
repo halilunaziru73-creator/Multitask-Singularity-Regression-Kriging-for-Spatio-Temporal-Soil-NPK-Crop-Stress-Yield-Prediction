@@ -1,0 +1,27 @@
+cff-version: 1.2.0
+message: "If you use this software, please cite it as below."
+type: software
+title: "Multitask Singularity Regression Kriging for Spatio-Temporal Soil NPK, Crop Stress, and Yield Prediction"
+authors:
+  - family-names: Halilu
+    given-names: Naziru
+    orcid: "https://orcid.org/0009-0006-2324-9599"
+repository-code: "https://github.com/halilunaziru73-creator/Multitask-Singularity-Regression-Kriging-for-Spatio-Temporal-Soil-NPK-Crop-Stress-Yield-Prediction"
+license: MIT
+version: 1.0.2
+date-released: "2026-08-05"
+identifiers:
+  - type: doi
+    value: "10.5281/zenodo.21801095"
+    description: "Archived snapshot of version v1.0.2 on Zenodo"
+  - type: doi
+    value: "10.5281/zenodo.21798401"
+    description: "Concept DOI: always resolves to the latest archived version"
+keywords:
+  - GeoAI
+  - regression kriging
+  - precision agriculture
+  - soil NPK mapping
+  - crop stress
+  - yield prediction
+  - spatio-temporal modeling
