@@ -1,0 +1,22 @@
+{
+  "title": "Multitask Singularity Regression Kriging for Spatio-Temporal Soil NPK, Crop Stress, and Yield Prediction",
+  "description": "GeoAI framework combining a multiscale local singularity index, multitask Random Forest trend modelling, and residual kriging for precision-agriculture mapping of soil NPK, crop stress, and yield.",
+  "creators": [
+    {
+      "name": "Halilu, Naziru",
+      "orcid": "0009-0006-2324-9599"
+    }
+  ],
+  "keywords": [
+    "GeoAI",
+    "regression kriging",
+    "precision agriculture",
+    "soil NPK mapping",
+    "crop stress",
+    "yield prediction",
+    "spatio-temporal modeling"
+  ],
+  "license": "MIT",
+  "upload_type": "software",
+  "access_right": "open"
+}
