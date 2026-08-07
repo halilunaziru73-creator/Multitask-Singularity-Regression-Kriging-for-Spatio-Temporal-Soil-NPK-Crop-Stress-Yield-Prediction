@@ -1,5 +1,8 @@
 <div align="center">
 
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.21801095.svg)](https://doi.org/10.5281/zenodo.21801095)
+
+
 # Multitask Singularity Regression Kriging for Spatio-Temporal Mapping of Soil NPK Dynamics, Crop Stress, and Yield Prediction in Precision Agriculture
 
 ### A Deep-Analysis GeoAI Study with Geostatistical, Machine-Learning, and Decision-Support Extensions
