@@ -60,7 +60,7 @@
   <p class="metric">Moran's I up to 0.98 (p < 0.001)</p>
   <div class="card">
     <p class="sim-label">Graphical abstract</p>
-    <img class="figure" src="../graphical_abstract.png" alt="Graphical abstract for Multitask Singularity Regression Kriging">
+    <img class="figure" src="graphical_abstract.png" alt="Graphical abstract for Multitask Singularity Regression Kriging">
     <p class="sim-label">Process simulation</p>
     <svg id="sim" viewBox="0 0 680 100" role="img" aria-label="Animated process simulation">
       <line x1="40" y1="55" x2="640" y2="55" stroke="var(--node)" stroke-width="1"/>
@@ -87,7 +87,7 @@
     <button class="ask-btn" id="ask-btn" onclick="sendQuestion()">Send question</button>
     <p class="ask-status" id="ask-status"></p>
   </div>
-  <a class="back" href="../README.md">&larr; Back to README</a>
+  <a class="back" href="https://github.com/halilunaziru73-creator/Multitask-Singularity-Regression-Kriging-for-Spatio-Temporal-Soil-NPK-Crop-Stress-Yield-Prediction">&larr; Back to GitHub repository</a>
 </div>
 <script>
 async function sendQuestion() {
@@ -133,7 +133,7 @@ async function sendQuestion() {
 }
 </script>
 <script>
-const steps = [{"t": "Multi-site field data", "img": "../figures/Figure_05_Observed_vs_predicted_corn_yield_NPK.png", "d": "Three real University field practicals \u2014 a 16.85-hectare maize grid with nearly 18,000 sample points, a vineyard Brix/NDVI programme, and a grape-moth IPM dataset \u2014 not one convenient toy dataset."}, {"t": "Singularity index", "img": "../figures/Figure_02_Multiscale_local_singularity_index.png", "d": "Borrowed from local-singularity and multifractal theory, this engineered feature captures spatial structure at multiple scales simultaneously \u2014 something a standard single-scale kriging model simply cannot see."}, {"t": "Shared RF trend", "img": "../figures/Figure_03_CV_R2_heatmap_model_task.png", "d": "Yield, NPK prescription, soil pH and lime demand are modelled together in one shared multi-output Random Forest, letting correlated agronomic tasks borrow statistical strength from each other rather than being fit in isolation."}, {"t": "Residual kriging", "img": "../figures/Figure_17_Residual_kriging_uncertainty_comparison.png", "d": "Whatever the trend model misses gets kriged separately for every task and sampling date \u2014 no one-size-fits-all residual surface, and uncertainty is compared directly against a simpler RFK baseline."}, {"t": "Diagnostics", "img": "../figures/Figure_11_Morans_I_scatterplot.png", "d": "Global Moran's I as high as 0.98 (p < 0.001) confirms strong, real spatial structure in the data \u2014 exactly the kind of check most 'just krige it' workflows skip, alongside fitted spherical, exponential and Gaussian variogram models."}, {"t": "Prediction maps", "img": "../figures/Figure_16_West_east_transect_OK_RF_SRK.png", "d": "Leakage-controlled spatial cross-validation across six competing estimators \u2014 the deliberately harder test that stops a map from looking better on paper than it will perform in the field."}];
+const steps = [{"t": "Multi-site field data", "img": "figures/Figure_05_Observed_vs_predicted_corn_yield_NPK.png", "d": "Three real University field practicals \u2014 a 16.85-hectare maize grid with nearly 18,000 sample points, a vineyard Brix/NDVI programme, and a grape-moth IPM dataset \u2014 not one convenient toy dataset."}, {"t": "Singularity index", "img": "figures/Figure_02_Multiscale_local_singularity_index.png", "d": "Borrowed from local-singularity and multifractal theory, this engineered feature captures spatial structure at multiple scales simultaneously \u2014 something a standard single-scale kriging model simply cannot see."}, {"t": "Shared RF trend", "img": "figures/Figure_03_CV_R2_heatmap_model_task.png", "d": "Yield, NPK prescription, soil pH and lime demand are modelled together in one shared multi-output Random Forest, letting correlated agronomic tasks borrow statistical strength from each other rather than being fit in isolation."}, {"t": "Residual kriging", "img": "figures/Figure_17_Residual_kriging_uncertainty_comparison.png", "d": "Whatever the trend model misses gets kriged separately for every task and sampling date \u2014 no one-size-fits-all residual surface, and uncertainty is compared directly against a simpler RFK baseline."}, {"t": "Diagnostics", "img": "figures/Figure_11_Morans_I_scatterplot.png", "d": "Global Moran's I as high as 0.98 (p < 0.001) confirms strong, real spatial structure in the data \u2014 exactly the kind of check most 'just krige it' workflows skip, alongside fitted spherical, exponential and Gaussian variogram models."}, {"t": "Prediction maps", "img": "figures/Figure_16_West_east_transect_OK_RF_SRK.png", "d": "Leakage-controlled spatial cross-validation across six competing estimators \u2014 the deliberately harder test that stops a map from looking better on paper than it will perform in the field."}];
 let idx = 0;
 let timer = null;
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
