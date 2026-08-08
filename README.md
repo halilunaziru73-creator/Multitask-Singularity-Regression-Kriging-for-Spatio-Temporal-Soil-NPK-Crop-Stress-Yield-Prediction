@@ -20,6 +20,8 @@ Universidade de Trás-os-Montes e Alto Douro (UTAD) — GIS, Remote Sensing and 
 ---
 
 
+![Graphical Abstract](graphical_abstract.png)
+
 ## Problem, Methodology, and Results
 
 **Problem.** Standard regression kriging implementations treat each agronomic response variable independently, use a fixed single-scale notion of spatial context, and rarely report the deeper geostatistical diagnostics (spatial autocorrelation, variogram-model adequacy, uncertainty calibration) needed to trust a management map.
