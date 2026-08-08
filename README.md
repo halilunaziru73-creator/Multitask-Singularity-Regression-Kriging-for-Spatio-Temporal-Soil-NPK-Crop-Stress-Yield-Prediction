@@ -19,6 +19,15 @@ Universidade de Trás-os-Montes e Alto Douro (UTAD) — GIS, Remote Sensing and 
 
 ---
 
+
+## Problem, Methodology, and Results
+
+**Problem.** Standard regression kriging implementations treat each agronomic response variable independently, use a fixed single-scale notion of spatial context, and rarely report the deeper geostatistical diagnostics (spatial autocorrelation, variogram-model adequacy, uncertainty calibration) needed to trust a management map.
+
+**Methodology.** Multitask Singularity Regression Kriging (MSRK) is a GeoAI framework that (i) engineers a multiscale local singularity index for every task from local-singularity/multifractal theory; (ii) trains a shared multi-output Random Forest trend model across correlated agronomic tasks; and (iii) krigs the resulting residuals per task and per sampling date. It was stress-tested on real precision-agriculture data from three linked University field practicals at UTAD: a dense 16.85-hectare maize grid (n = 17,864), a 6-hectare vineyard Brix/NDVI ripening-stress monitoring programme, a 35,448-row auxiliary soil-chemistry workbook, and a 42.97-hectare grape-moth IPM planning dataset — structured around five explicit research questions.
+
+**Results.** Global Moran's I spatial-autocorrelation statistics ranged 0.72–0.98 (all p < 0.001). Spherical, exponential, and Gaussian variogram models were fitted and compared for directional (anisotropic) behaviour. A leakage-controlled 5-fold spatial cross-validation of six competing estimators, a sensitivity surface over the singularity-index radius bank, out-of-fold permutation importance, and a comparison of SRK against RFK residual-kriging uncertainty on a 1,600-cell prediction grid together validate MSRK's reliability for operational management mapping.
+
 ## Table of Contents
 
 - [Overview](#overview)
