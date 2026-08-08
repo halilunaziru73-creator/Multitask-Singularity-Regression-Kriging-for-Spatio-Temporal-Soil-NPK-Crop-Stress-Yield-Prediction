@@ -30,6 +30,8 @@
   .bubble-name { font-size:12px; color:var(--text-secondary); margin:0 0 4px; }
   .bubble { background:var(--bg); border-radius:12px; border-top-left-radius:4px; padding:0.85rem 1rem;
     min-height:52px; display:flex; align-items:center; font-size:14.5px; line-height:1.6; }
+  .step-figure { width:100%; border-radius:10px; border:1px solid var(--border); margin:12px 0 4px; display:block; }
+  .step-figure-cap { font-size:11.5px; color:var(--text-secondary); margin:0 0 12px; }
   .figure { width:100%; border-radius:10px; border:1px solid var(--border); margin-bottom:1.25rem; display:block; }
   .ask-card { background: var(--card); border: 1px solid var(--border); border-radius: 12px; padding: 1.5rem; margin-top:1.25rem; }
   .ask-title { font-size:15px; font-weight:600; margin:0 0 4px; }
@@ -71,6 +73,8 @@
       <div class="bubble-col">
         <p class="bubble-name">Naziru explains this step</p>
         <div class="bubble" id="detail"></div>
+        <img class="step-figure" id="step-figure" src="" alt="">
+        <p class="step-figure-cap" id="step-figure-cap"></p>
       </div>
     </div>
   </div>
@@ -129,7 +133,7 @@ async function sendQuestion() {
 }
 </script>
 <script>
-const steps = [{"t": "Multi-site field data", "d": "Three real University field practicals \u2014 a 16.85-hectare maize grid with nearly 18,000 sample points, a vineyard, and a grape-moth IPM programme \u2014 not one convenient toy dataset."}, {"t": "Singularity index engineering", "d": "Borrowed from multifractal theory, this feature captures spatial structure at multiple scales at once \u2014 something a standard single-scale kriging model simply cannot see."}, {"t": "Shared multi-output RF trend", "d": "Yield, NPK prescription, soil pH and lime demand are modelled together, letting correlated agronomic tasks borrow statistical strength from each other."}, {"t": "Per-task residual kriging", "d": "Whatever the trend model misses gets kriged separately for every task and sampling date \u2014 no one-size-fits-all residual surface."}, {"t": "Geostatistical diagnostics", "d": "Moran's I as high as 0.98 confirms strong, real spatial structure in the data \u2014 exactly the kind of check most 'just krige it' workflows skip."}, {"t": "Validated prediction maps", "d": "Leakage-controlled spatial cross-validation \u2014 the deliberately harder test that stops a map from looking better on paper than it will in the field."}];
+const steps = [{"t": "Multi-site field data", "img": "../figures/Figure_05_Observed_vs_predicted_corn_yield_NPK.png", "d": "Three real University field practicals \u2014 a 16.85-hectare maize grid with nearly 18,000 sample points, a vineyard Brix/NDVI programme, and a grape-moth IPM dataset \u2014 not one convenient toy dataset."}, {"t": "Singularity index", "img": "../figures/Figure_02_Multiscale_local_singularity_index.png", "d": "Borrowed from local-singularity and multifractal theory, this engineered feature captures spatial structure at multiple scales simultaneously \u2014 something a standard single-scale kriging model simply cannot see."}, {"t": "Shared RF trend", "img": "../figures/Figure_03_CV_R2_heatmap_model_task.png", "d": "Yield, NPK prescription, soil pH and lime demand are modelled together in one shared multi-output Random Forest, letting correlated agronomic tasks borrow statistical strength from each other rather than being fit in isolation."}, {"t": "Residual kriging", "img": "../figures/Figure_17_Residual_kriging_uncertainty_comparison.png", "d": "Whatever the trend model misses gets kriged separately for every task and sampling date \u2014 no one-size-fits-all residual surface, and uncertainty is compared directly against a simpler RFK baseline."}, {"t": "Diagnostics", "img": "../figures/Figure_11_Morans_I_scatterplot.png", "d": "Global Moran's I as high as 0.98 (p < 0.001) confirms strong, real spatial structure in the data \u2014 exactly the kind of check most 'just krige it' workflows skip, alongside fitted spherical, exponential and Gaussian variogram models."}, {"t": "Prediction maps", "img": "../figures/Figure_16_West_east_transect_OK_RF_SRK.png", "d": "Leakage-controlled spatial cross-validation across six competing estimators \u2014 the deliberately harder test that stops a map from looking better on paper than it will perform in the field."}];
 let idx = 0;
 let timer = null;
 const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -174,6 +178,18 @@ function render() {
   });
   document.getElementById('detail').textContent = 'Step ' + (idx + 1) + ' — ' + steps[idx].t + '. ' + steps[idx].d;
   document.getElementById('particle').setAttribute('cx', nodeX(idx, steps.length));
+  const fig = document.getElementById('step-figure');
+  const cap = document.getElementById('step-figure-cap');
+  if (steps[idx].img) {
+    fig.src = steps[idx].img;
+    fig.alt = steps[idx].t;
+    fig.style.display = 'block';
+    cap.textContent = 'Figure from the manuscript — ' + steps[idx].t;
+    cap.style.display = 'block';
+  } else {
+    fig.style.display = 'none';
+    cap.style.display = 'none';
+  }
 }
 
 function tick() { idx = (idx + 1) % steps.length; render(); }
