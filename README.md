@@ -20,8 +20,6 @@ Universidade de Trás-os-Montes e Alto Douro (UTAD) — GIS, Remote Sensing and 
 ---
 
 
-![Graphical Abstract](graphical_abstract.png)
-
 **Workflow sketch**
 
 ![Workflow Sketch](workflow_sketch.png)
