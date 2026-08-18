@@ -20,13 +20,13 @@ Universidade de Trás-os-Montes e Alto Douro (UTAD) — GIS, Remote Sensing and 
 ---
 
 
+## Problem, Methodology, and Results
+
 **Workflow sketch**
 
 ![Workflow Sketch](workflow_sketch.png)
 
 [View interactive graphical abstract →](https://halilunaziru73-creator.github.io/Multitask-Singularity-Regression-Kriging-for-Spatio-Temporal-Soil-NPK-Crop-Stress-Yield-Prediction/)
-
-## Problem, Methodology, and Results
 
 **Problem.** Standard regression kriging implementations treat each agronomic response variable independently, use a fixed single-scale notion of spatial context, and rarely report the deeper geostatistical diagnostics (spatial autocorrelation, variogram-model adequacy, uncertainty calibration) needed to trust a management map.
 
