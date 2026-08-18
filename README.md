@@ -22,6 +22,10 @@ Universidade de Trás-os-Montes e Alto Douro (UTAD) — GIS, Remote Sensing and 
 
 ![Graphical Abstract](graphical_abstract.png)
 
+**Workflow sketch**
+
+![Workflow Sketch](workflow_sketch.png)
+
 [View interactive graphical abstract →](https://halilunaziru73-creator.github.io/Multitask-Singularity-Regression-Kriging-for-Spatio-Temporal-Soil-NPK-Crop-Stress-Yield-Prediction/)
 
 ## Problem, Methodology, and Results
